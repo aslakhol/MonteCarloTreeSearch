@@ -4,9 +4,7 @@ def rollout_policy(state):
     # probably just a dict
     return action
 
-
 # simulation starts at a node that has not been visited
-
 
 class MonteCarloSearchTree:
     rollout_policy = {}
@@ -55,3 +53,8 @@ class MonteCarloSearchNode:
 # total simulation reward / total number of visits
 
 # ExplorC: favors those rarely explored
+
+
+# unvisited - not touched
+# visited - rollout has started here
+# fully expanded - rollout performed in all children
