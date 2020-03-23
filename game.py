@@ -21,7 +21,7 @@ class Game:
             raise Exception("Wrong game configuration")
 
     # Initialize starting player
-    def get_starting_player(config):
+    def get_starting_player(self, config):
         if config == "one":
             return 1
         elif config == "two":
