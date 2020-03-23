@@ -12,7 +12,7 @@ class MonteCarloSearchTree:
         self.M = 100
         self.c = math.sqrt(2)
 
-    def monte_carlo_tree_search(self, root):
+    def suggest_action(self, root):
         for _ in range(0, self.M):
             node_to_visit = self.traverse(root)
             simulation_result = self.rollout(node_to_visit)
