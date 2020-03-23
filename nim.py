@@ -10,10 +10,12 @@ class Nim:
 
         print("nim", pieces)
 
-    def move(self, amount):
-        if amount > 0 and amount < self.pieces:
+    def move(self, action):
+        amount = action[0]
+        if amount > 0 and amount <= self.pieces:
             self.pieces -= amount
         else:
+            print(amount)
             raise ValueError("Illegal move")
 
         return self.is_end_state()
@@ -22,10 +24,10 @@ class Nim:
         return self.pieces == 0
 
     def generate_child_states(self):
-        return [self.amount - i for i in range(1, self.max_take)]
+        return [self.amount - action[0] for action in get_legal_moves()]
 
     def get_legal_moves(self):
-        return [i for i in range(1, self.max_take)]
+        return [[i] for i in range(1, min(self.max_take, self.pieces+1))]
 
     def get_state(self):
         return self.pieces
@@ -38,7 +40,7 @@ class Nim:
         return 0
 
     def get_verbose(self, currentPlayer, action):
-        return f"Player {currentPlayer} selects {action[0]} stones: remaining stones = {self.amount}"
+        return f"Player {currentPlayer} selects {action[0]} stones: remaining stones = {self.pieces}"
 
 
 Nim(2, 1)

@@ -1,6 +1,6 @@
 class Ledge:
     board = []
-    self.end_state = False
+    end_state = False
 
     def __init__(self, initial_board):
         board = [int(i) for i in initial_board]
