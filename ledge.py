@@ -1,15 +1,15 @@
-
 class Ledge:
     board = []
     self.end_state = False
+
     def __init__(self, initial_board):
         board = [int(i) for i in initial_board]
 
     def move(self, action):
-        if action[0] == "PICK_UP"
-            if(self.board[0] == 2):
+        if action[0] == "PICK_UP":
+            if self.board[0] == 2:
                 self.end_state = True
-            self.board[0] = 0 
+            self.board[0] = 0
         elif action[0] == "MOVE_COIN":
             position_from = action[1]
             number_of_steps = action[2]
@@ -25,31 +25,40 @@ class Ledge:
 
     def generate_child_states(self):
         child_states = []
-        for move in range self.get_legal_moves():
+        for move in self.get_legal_moves():
             game = Ledge(initial_board=self.getState())
             game.move(move)
             child_states.append(game.get_state())
         return child_states
 
-
     def get_legal_moves(self):
         moves = []
-        coins_indices = [0] + [index for index, value in enumerate(self.board) if value != 0]
+        coin_indices = [0] + [
+            index for index, value in enumerate(self.board) if value != 0
+        ]
         for i in range(1, len(coin_indices)):
-            for j in range(coin_indices[i-1], coin_indices[i]-1):
-                moves.append(["MOVE_COIN",coin_indices[i], j)
-        if(self.board[0] != 0):
+            for j in range(coin_indices[i - 1], coin_indices[i] - 1):
+                moves.append(["MOVE_COIN", coin_indices[i], j])
+        if self.board[0] != 0:
             moves.append(["PICK_UP"])
         return moves
-    
-    def get_state(self):
-        return "".join(map(str,self.board))
 
+    def get_state(self):
+        return "".join(map(str, self.board))
 
     def reward(self):
-        if(self.end_state):
+        if self.end_state:
             return 1
-        elif(self.board[0] == 2):
+        elif self.board[0] == 2:
             return -1
         return 0
 
+    def get_verbose(self, currentPlayer, action):
+        if action[0] == "PICK_UP":
+            item = self.board[0]
+            coin = "Copper" if item == 1 else "Gold"
+            return f"{currentPlayer} picks up {coin}: {self.board}"
+        if action[0] == "PICK_UP":
+            index = action[1] - action[2]
+            coin = "Copper" if self.board[index] == 1 else "Gold"
+            return f"{currentPlayer} moves {coin} from cell {action[1]} to {index} : {self.board}"

@@ -9,4 +9,3 @@ class MonteCarloSearchNode:
 
     def populate_children(self, possible_moves):
         pass
-

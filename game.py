@@ -3,16 +3,18 @@ from config import nim, ledge, general as nim_config, ledge_config, general_conf
 from ledge import Ledge
 from nim import Nim
 
+
 class Game:
-    
     def __init__(self, initial_state=""):
         self.verbose = general_config["verbose"]
-        self.starting_player = self.get_starting_player(general_config["starting_player"])
+        self.starting_player = self.get_starting_player(
+            general_config["starting_player"]
+        )
         self.current_player = self.starting_player
-        if(general_config["game"] == "nim"):
+        if general_config["game"] == "nim":
             pieces = initial_state if initial_state else nim_config["pieces"]
             self.game = Nim(pieces=pieces, max_take=nim_config["max_take"])
-        elif(general_config["game"] == "ledge"):
+        elif general_config["game"] == "ledge":
             board = initial_state if initial_state else nim_config["initial_board"]
             self.game = Ledge(initial_board=board)
         else:
@@ -34,7 +36,10 @@ class Game:
             self.current_player = 1
 
     def move(self, action):
-        return self.game.move(action)
+        self.game.move(action)
+        if self.verbose:
+            print(self.game.get_verbose(self.current_player, action))
+        self.switch_current_player()
 
     def is_end_state(self):
         return self.game.is_end_state()
