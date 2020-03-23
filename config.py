@@ -1,7 +1,7 @@
 nim = dict(
-    number_in_batch=100,
+    pieces=100,
     starting_player=1,
-    number_of_stones=100,
+    number_in_batch=100,
     max_take=12
 )
 
@@ -15,4 +15,6 @@ ledge = dict(
 general = dict(
     verbose_mode=True,
     win_statistics_batch=True,
+    game="nim",
+    starting_player="one" #one, two or mix
 )

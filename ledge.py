@@ -1,9 +1,8 @@
-from config import ledge as ledge_config
 
 class Ledge:
     board = []
     self.end_state = False
-    def __init__(self, initial_board=ledge_config["initial_board"]):
+    def __init__(self, initial_board):
         board = [int(i) for i in initial_board]
 
     def move(self, action):
@@ -35,7 +34,7 @@ class Ledge:
 
     def get_legal_moves(self):
         moves = []
-        coins_indices = [0] + [index for value, index in enumerate(self.board) if value != 0]
+        coins_indices = [0] + [index for index, value in enumerate(self.board) if value != 0]
         for i in range(1, len(coin_indices)):
             for j in range(coin_indices[i-1], coin_indices[i]-1):
                 moves.append(["MOVE_COIN",coin_indices[i], j)
