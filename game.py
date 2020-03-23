@@ -1,12 +1,14 @@
 import random
-from config import nim, ledge, general as nim_config, ledge_config, general_config
+from config import nim as nim_config
+from config import ledge as ledge_config
+from config import general as general_config
 from ledge import Ledge
 from nim import Nim
 
 
 class Game:
     def __init__(self, initial_state=""):
-        self.verbose = general_config["verbose"]
+        self.verbose = general_config["verbose_mode"]
         self.starting_player = self.get_starting_player(
             general_config["starting_player"]
         )
