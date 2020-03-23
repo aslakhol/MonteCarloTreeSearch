@@ -10,7 +10,7 @@ class Nim:
 
         print("nim", pieces)
 
-    def take_pieces(self, amount):
+    def move(self, amount):
         if amount > 0 and amount < self.pieces:
             self.pieces -= amount
         else:
@@ -19,7 +19,23 @@ class Nim:
         return self.is_end_state()
 
     def is_end_state(self):
-        return self.pieces == 1
+        return self.pieces == 0
+
+    def generate_child_states(self):
+        return [self.amount - i for i in range(1, self.max_take)]
+
+    def get_legal_moves(self):
+        return [i for i in range(1, self.max_take)]
+
+    def get_state(self):
+        return self.pieces
+
+    def reward(self):
+        if self.amount <= max_take:
+            return -1
+        elif self.pieces == 0:
+            return 1
+        return 0
 
 
 Nim(2, 1)
