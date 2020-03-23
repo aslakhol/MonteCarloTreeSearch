@@ -42,12 +42,13 @@ class Game:
         if self.verbose:
             print(self.game.get_verbose(self.current_player, action))
         self.switch_current_player()
+        return self.get_state()
 
     def is_end_state(self):
         return self.game.is_end_state()
 
     def generate_child_states(self):
-        return self.game.generate_child_states()
+        return [Game(action[0]) for action in self.get_legal_moves()]
 
     def get_legal_moves(self):
         return self.game.get_legal_moves()
