@@ -37,5 +37,8 @@ class Nim:
             return 1
         return 0
 
+    def get_verbose(self, currentPlayer, action):
+        return f"Player {currentPlayer} selects {action[0]} stones: remaining stones = {self.amount}"
+
 
 Nim(2, 1)
