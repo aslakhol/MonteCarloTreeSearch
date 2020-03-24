@@ -1,4 +1,4 @@
-nim = dict(pieces=100, starting_player=1, number_in_batch=100, max_take=12)
+nim = dict(pieces=10, starting_player=1, number_in_batch=100, max_take=4)
 
 ledge = dict(
     number_in_batch=100,
