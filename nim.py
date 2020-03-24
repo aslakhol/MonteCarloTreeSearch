@@ -8,8 +8,6 @@ class Nim:
         else:
             raise ValueError("Initialized to illegal game state")
 
-        print("nim init", pieces)
-
     def move(self, action):
         amount = action[0]
         if amount > 0 and amount <= self.pieces:

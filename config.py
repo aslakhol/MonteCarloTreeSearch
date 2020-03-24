@@ -8,7 +8,7 @@ ledge = dict(
 )
 
 general = dict(
-    verbose_mode=True,
+    verbose_mode=False,
     win_statistics_batch=True,
     game="nim",
     starting_player="one",  # one, two or mix

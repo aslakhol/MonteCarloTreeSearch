@@ -17,12 +17,13 @@ class MonteCarloSearchTree:
 
     def traverse(self, node):
         node.expand()
-        while node.fully_expanded:
+        while node.is_fully_expanded():
             node = self.best_uct(node)
 
         return self.pick_unvisited_child(node) or node
 
     def rollout(self, node):
+        node.visited = True
         while not len(node.children) == 0:
             node = self.rollout_policy(node)
         return self.reward(
@@ -46,10 +47,11 @@ class MonteCarloSearchTree:
         return self.child_with_highest_number_of_visits(node)
 
     def child_with_highest_number_of_visits(self, node):
+        print("Is root:", node.is_root)
+        print(node.children)
         return max(node.children, key=lambda x: x.total_number_of_visits)
 
     def pick_unvisited_child(self, node):
-        print("pick unvisited", node)
         return random.choice(
             list(filter(lambda x: x.total_number_of_visits == 0, node.children))
         )

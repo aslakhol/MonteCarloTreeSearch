@@ -21,8 +21,17 @@ class MonteCarloSearchNode:
             for game in self.game_object.generate_child_states()
         ]
 
+    def is_fully_expanded(self):
+        for child in self.children:
+            if child.visited == False:
+                return False
+        return True
+
     def populate_children(self, possible_moves):
         pass
 
     def __str__(self):
         return f"root: {self.is_root}, fully expanded: {self.fully_expanded}, children: {self.children}, total reward: {self.total_simulation_reward}, total visits: {self.total_number_of_visits}, game state: {self.game_object.get_state()}"
+
+    def __repr__(self):
+        return f"|parent: {self.parent.is_root}, visits: {self.total_number_of_visits}|"
