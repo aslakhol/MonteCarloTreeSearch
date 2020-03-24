@@ -42,13 +42,15 @@ class Game:
         if self.verbose:
             print(self.game.get_verbose(self.current_player, action))
         self.switch_current_player()
-        return self.get_state()
+        return self
 
     def is_end_state(self):
         return self.game.is_end_state()
 
     def generate_child_states(self):
-        return [Game(self.move(action)) for action in self.get_legal_moves()]
+        return [
+            Game(self.get_state()).move(action) for action in self.get_legal_moves()
+        ]
 
     def get_legal_moves(self):
         return self.game.get_legal_moves()
@@ -58,3 +60,9 @@ class Game:
 
     def reward(self):
         return self.game.reward()
+
+    def __str__(self):
+        return f"GAME: player: {self.current_player}, state: {self.game.get_state()}"
+
+    def __repr__(self):
+        return self.__str__()

@@ -5,12 +5,10 @@ import random
 
 game = Game()
 tree = MonteCarloSearchTree()
-
 root_node = MonteCarloSearchNode(True, children=game.generate_child_states())
 
 
 def traverse_randomly(node):
-    print(node)
     print("traversal step")
     if len(node.children) <= 1:
         print("The end")
