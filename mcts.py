@@ -5,8 +5,8 @@ from game import Game
 
 class MonteCarloSearchTree:
     def __init__(self):
-        self.M = 1000
-        self.c = math.sqrt(2)
+        self.M = 10000
+        self.c = 0.5
 
     def suggest_action(self, root):
         for _ in range(0, self.M):
@@ -16,15 +16,18 @@ class MonteCarloSearchTree:
         return self.best_child(root)
 
     def traverse(self, node):
-        node.expand()
+
         while node.is_fully_expanded():
+
             node = self.best_uct(node)
 
         return self.pick_unvisited_child(node) or node
 
     def rollout(self, node):
+        node.expand()
         node.visited = True
-        return node.game_object.play_randomly()  # this is our rollout policy
+        rollout_game = Game(node.game_object.get_state())
+        return rollout_game.play_randomly()  # this is our rollout policy
 
     def backpropagate(self, node, result):
         if node:
@@ -40,8 +43,7 @@ class MonteCarloSearchTree:
         return self.child_with_highest_number_of_visits(node)
 
     def child_with_highest_number_of_visits(self, node):
-        print("Is root:", node.is_root)
-        print(node.children)
+
         return max(node.children, key=lambda x: x.total_number_of_visits)
 
     def pick_unvisited_child(self, node):
@@ -59,13 +61,13 @@ class MonteCarloSearchTree:
         )
 
     def exploitation_component(self, node):
-        print(
-            "reward:",
-            node.total_simulation_reward,
-            "visits:",
-            node.total_number_of_visits,
-            node.total_simulation_reward / node.total_number_of_visits,
-        )
+        # print(
+        #     "reward:",
+        #     node.total_simulation_reward,
+        #     "visits:",
+        #     node.total_number_of_visits,
+        #     node.total_simulation_reward / node.total_number_of_visits,
+        # )
         return node.total_simulation_reward / node.total_number_of_visits
 
     def exploration_component(self, node, parent):
@@ -74,7 +76,6 @@ class MonteCarloSearchTree:
         )
 
     def reward(self, node):
-        # print("reward from mcts")
         if node.player == 1:
             return node.reward
 
