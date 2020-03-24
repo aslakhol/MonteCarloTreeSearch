@@ -28,9 +28,7 @@ class Nim:
         return self.pieces
 
     def reward(self):
-        if self.pieces <= self.max_take:
-            return -1
-        elif self.pieces == 0:
+        if self.pieces == 0:
             return 1
         return 0
 

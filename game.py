@@ -61,6 +61,12 @@ class Game:
     def reward(self):
         return self.game.reward()
 
+    def play_randomly(self):
+        while not self.is_end_state():
+            legal_moves = self.get_legal_moves()
+            self.move(random.choice(legal_moves))
+        return self.reward()
+
     def __str__(self):
         return f"GAME: player: {self.current_player}, state: {self.game.get_state()}"
 

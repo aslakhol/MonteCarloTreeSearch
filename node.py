@@ -8,20 +8,26 @@ class MonteCarloSearchNode:
     total_number_of_visits = 0
     parent = None
     reward = 0
+    player = None
 
     def __init__(self, is_root, parent, game_object):
         self.is_root = is_root
         self.game_object = game_object
         self.parent = parent
         self.reward = game_object.reward()
+        self.player = game_object.current_player
 
     def expand(self):
+        if self.children:
+            return
         self.children = [
             MonteCarloSearchNode(is_root=False, parent=self, game_object=game)
             for game in self.game_object.generate_child_states()
         ]
 
     def is_fully_expanded(self):
+        if not self.children:
+            return False
         for child in self.children:
             if child.visited == False:
                 return False
@@ -31,7 +37,7 @@ class MonteCarloSearchNode:
         pass
 
     def __str__(self):
-        return f"root: {self.is_root}, fully expanded: {self.fully_expanded}, children: {self.children}, total reward: {self.total_simulation_reward}, total visits: {self.total_number_of_visits}, game state: {self.game_object.get_state()}"
+        return f"root: {self.is_root}, player: {self.player}, fully expanded: {self.fully_expanded}, children: {self.children}, total reward: {self.total_simulation_reward}, total visits: {self.total_number_of_visits}, game state: {self.game_object.get_state()}"
 
     def __repr__(self):
-        return f"|parent: {self.parent.is_root}, visits: {self.total_number_of_visits}|"
+        return f"|parent is root: {self.parent.is_root}, visits: {self.total_number_of_visits}, player: {self.player}|"
