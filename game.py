@@ -48,7 +48,7 @@ class Game:
         return self.game.is_end_state()
 
     def generate_child_states(self):
-        return [Game(action[0]) for action in self.get_legal_moves()]
+        return [Game(self.move(action)) for action in self.get_legal_moves()]
 
     def get_legal_moves(self):
         return self.game.get_legal_moves()
