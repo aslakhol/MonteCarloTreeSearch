@@ -22,7 +22,7 @@ for _ in range(0, 1000):
     root_node = MonteCarloSearchNode(is_root=True, game_object=game, parent=None)
     suggested_action = tree.suggest_action(root_node)
     print("Suggested action:", suggested_action)
-    move = 10 - suggested_action.game_object.get_state()
+    move = suggested_action.game_object.get_state()
 
     moves[move] = moves.get(move, 0) + 1
 
