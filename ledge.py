@@ -1,9 +1,9 @@
 class Ledge:
-    board = []
     end_state = False
 
     def __init__(self, initial_board):
-        board = [int(i) for i in initial_board]
+        self.board = [int(i) for i in initial_board]
+        print(f"Initial board {self.board}")
 
     def move(self, action):
         if action[0] == "PICK_UP":
@@ -12,10 +12,10 @@ class Ledge:
             self.board[0] = 0
         elif action[0] == "MOVE_COIN":
             position_from = action[1]
-            number_of_steps = action[2]
+            position_to = action[2]
             coin = self.board[position_from]
+            self.board[position_to] = coin
             self.board[position_from] = 0
-            self.board[position_to - numberOfSteps] = coin
         else:
             raise ValueError("Illegal move")
         return self.is_end_state()
@@ -33,12 +33,14 @@ class Ledge:
 
     def get_legal_moves(self):
         moves = []
-        coin_indices = [0] + [
-            index for index, value in enumerate(self.board) if value != 0
-        ]
-        for i in range(1, len(coin_indices)):
-            for j in range(coin_indices[i - 1], coin_indices[i] - 1):
-                moves.append(["MOVE_COIN", coin_indices[i], j])
+        coin_indices = [index for index, value in enumerate(self.board) if value != 0]
+        for index in coin_indices:
+            reverse = range(index - 1, -1, -1)
+            for i in reverse:
+                if self.board[i] != 0:
+                    break
+                print(index, i)
+                moves.append(["MOVE_COIN", index, i])
         if self.board[0] != 0:
             moves.append(["PICK_UP"])
         return moves
@@ -56,9 +58,9 @@ class Ledge:
     def get_verbose(self, currentPlayer, action):
         if action[0] == "PICK_UP":
             item = self.board[0]
-            coin = "Copper" if item == 1 else "Gold"
+            coin = "Copper" if not self.end_state else "Gold"
             return f"{currentPlayer} picks up {coin}: {self.board}"
-        if action[0] == "PICK_UP":
-            index = action[1] - action[2]
+        if action[0] == "MOVE_COIN":
+            index = action[2]
             coin = "Copper" if self.board[index] == 1 else "Gold"
             return f"{currentPlayer} moves {coin} from cell {action[1]} to {index} : {self.board}"
