@@ -17,7 +17,7 @@ class Game:
             pieces = initial_state if initial_state else nim_config["pieces"]
             self.game = Nim(pieces=pieces, max_take=nim_config["max_take"])
         elif general_config["game"] == "ledge":
-            board = initial_state if initial_state else nim_config["initial_board"]
+            board = initial_state if initial_state else ledge_config["initial_board"]
             self.game = Ledge(initial_board=board)
         else:
             raise Exception("Wrong game configuration")
