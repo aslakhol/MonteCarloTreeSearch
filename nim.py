@@ -8,14 +8,12 @@ class Nim:
         else:
             raise ValueError("Initialized to illegal game state")
 
-        print("nim", pieces)
-
     def move(self, action):
         amount = action[0]
         if amount > 0 and amount <= self.pieces:
             self.pieces -= amount
         else:
-            print(amount)
+            print("amount:", amount, "pieces:", self.pieces)
             raise ValueError("Illegal move")
 
         return self.is_end_state()
@@ -23,19 +21,14 @@ class Nim:
     def is_end_state(self):
         return self.pieces == 0
 
-    def generate_child_states(self):
-        return [self.amount - action[0] for action in get_legal_moves()]
-
     def get_legal_moves(self):
-        return [[i] for i in range(1, min(self.max_take, self.pieces+1))]
+        return [[i] for i in range(1, min(self.max_take, self.pieces) + 1)]
 
     def get_state(self):
         return self.pieces
 
     def reward(self):
-        if self.amount <= max_take:
-            return -1
-        elif self.pieces == 0:
+        if self.pieces == 0:
             return 1
         return 0
 
