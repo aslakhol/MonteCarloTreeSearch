@@ -5,26 +5,28 @@ import random
 
 game = Game()
 tree = MonteCarloSearchTree()
-root_node = MonteCarloSearchNode(True, children=game.generate_child_states())
+root_node = MonteCarloSearchNode(is_root=True, game_object=game, parent=None)
+print("Begin")
+print("Suggested action:", tree.suggest_action(root_node))
 
 
-def traverse_randomly(node):
-    print("traversal step")
-    if len(node.children) <= 1:
-        print("The end")
-        return
+# def traverse_randomly(node):
+#     print("traversal step")
+#     if len(node.children) <= 1:
+#         print("The end")
+#         return
 
-    random_child = MCSN_from_game(random.choice(node.children))
-    print(random_child)
-    return traverse_randomly(random_child)
+#     random_child = MCSN_from_game(random.choice(node.children))
+#     print(random_child)
+#     return traverse_randomly(random_child)
 
 
-def MCSN_from_game(game_object):
-    print(game_object.get_state())
-    return MonteCarloSearchNode(False, game_object.generate_child_states())
+# def MCSN_from_game(game_object):
+#     print(game_object.get_state())
+#     return MonteCarloSearchNode(False, game_object.generate_child_states())
 
 
 # while not game.is_end_state():
 #     tree.suggest_action()
 
-traverse_randomly(root_node)
+# traverse_randomly(root_node)

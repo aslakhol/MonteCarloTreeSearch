@@ -2,10 +2,6 @@ from node import MonteCarloSearchNode
 import random, math
 from game import Game
 
-# M = 100 user specifiable need to fix in below method
-M = 100
-c = math.sqrt(2)
-
 
 class MonteCarloSearchTree:
     def __init__(self):
@@ -20,12 +16,14 @@ class MonteCarloSearchTree:
         return self.best_child(root)
 
     def traverse(self, node):
+        node.expand()
         while node.fully_expanded:
             node = self.best_uct(node)
-        return self.pick_unvisited_child(node.children) or node
+
+        return self.pick_unvisited_child(node) or node
 
     def rollout(self, node):
-        while not node.terminal:
+        while not len(node.children) == 0:
             node = self.rollout_policy(node)
         return self.reward(
             node
@@ -35,7 +33,7 @@ class MonteCarloSearchTree:
         return random.choice(node.children)
 
     def backpropagate(self, node, result):
-        if not node.root:
+        if not node.is_root:
             self.update_stats(node, result)
             self.backpropagate(node.parent, result)
         return
@@ -48,10 +46,13 @@ class MonteCarloSearchTree:
         return self.child_with_highest_number_of_visits(node)
 
     def child_with_highest_number_of_visits(self, node):
-        return max(node.children, key=lambda x: x.children.total_number_of_visits)
+        return max(node.children, key=lambda x: x.total_number_of_visits)
 
     def pick_unvisited_child(self, node):
-        return random.choice(node.unvisited_children)
+        print("pick unvisited", node)
+        return random.choice(
+            list(filter(lambda x: x.total_number_of_visits == 0, node.children))
+        )
 
     def best_uct(self, node):
         best = node
