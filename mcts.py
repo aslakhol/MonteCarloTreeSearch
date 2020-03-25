@@ -6,7 +6,7 @@ from game import Game
 class MonteCarloSearchTree:
     def __init__(self):
         self.M = 500
-        self.c = math.sqrt(2)
+        self.c = 2
 
     def suggest_action(self, root):
         for _ in range(0, self.M):

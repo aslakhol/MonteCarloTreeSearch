@@ -3,7 +3,6 @@ class Ledge:
 
     def __init__(self, initial_board):
         self.board = [int(i) for i in initial_board]
-        print(f"Initial board {self.board}")
         if(not list(filter(lambda x: x==2, self.board))):
             self.end_state=True
 
@@ -41,7 +40,6 @@ class Ledge:
             for i in reverse:
                 if self.board[i] != 0:
                     break
-                print(index, i)
                 moves.append(["MOVE_COIN", index, i])
         if self.board[0] != 0:
             moves.append(["PICK_UP"])

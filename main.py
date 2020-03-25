@@ -16,12 +16,12 @@ import random
 
 moves = {}
 
-for _ in range(0, 1000):
+for _ in range(0, 500):
+    print(_)
     game = Game()
     tree = MonteCarloSearchTree()
     root_node = MonteCarloSearchNode(is_root=True, game_object=game, parent=None)
     suggested_action = tree.suggest_action(root_node)
-    print("Suggested action:", suggested_action)
     move = suggested_action.game_object.get_state()
 
     moves[move] = moves.get(move, 0) + 1
