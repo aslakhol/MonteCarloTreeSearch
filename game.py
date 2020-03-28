@@ -49,7 +49,8 @@ class Game:
 
     def generate_child_states(self):
         return [
-            Game(self.get_state()).move(action) for action in self.get_legal_moves()
+            (action, Game(self.get_state()).move(action))
+            for action in self.get_legal_moves()
         ]
 
     def get_legal_moves(self):

@@ -24,15 +24,19 @@ class MonteCarloSearchNode:
         if self.children:
             return
         self.children = [
-            MonteCarloSearchNode(is_root=False, parent=self, game_object=game)
-            for game in self.game_object.generate_child_states()
+            (
+                SAP[0],
+                MonteCarloSearchNode(is_root=False, parent=self, game_object=SAP[1]),
+            )
+            for SAP in self.game_object.generate_child_states()
         ]
 
     def is_fully_expanded(self):
+        print("hello")
         if not self.children:
             return False
-        for child in self.children:
-            if child.visited == False:
+        for child_SAP in self.children:
+            if child_SAP[1].visited == False:
                 return False
         return True
 

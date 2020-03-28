@@ -5,7 +5,7 @@ from game import Game
 
 class MonteCarloSearchTree:
     def __init__(self):
-        self.M = 500
+        self.M = 100
         self.c = 2
 
     def suggest_action(self, root):
@@ -16,10 +16,9 @@ class MonteCarloSearchTree:
         return self.best_child(root)
 
     def traverse(self, node):
-
         while node.is_fully_expanded():
-
             node = self.best_uct(node)
+            print("node: ", type(node))
 
         return self.pick_unvisited_child(node) or node
 
@@ -43,17 +42,25 @@ class MonteCarloSearchTree:
         return self.child_with_highest_number_of_visits(node)
 
     def child_with_highest_number_of_visits(self, node):
-
-        return max(node.children, key=lambda x: x.total_number_of_visits)
+        return max(
+            node.children, key=lambda child_SAP: child_SAP[1].total_number_of_visits
+        )
 
     def pick_unvisited_child(self, node):
         unvisited_children = list(
-            filter(lambda x: x.total_number_of_visits == 0, node.children)
+            filter(
+                lambda child_SAP: child_SAP[1].total_number_of_visits == 0,
+                node.children,
+            )
         )
-        return random.choice(unvisited_children) if unvisited_children else False
+        return random.choice(unvisited_children)[1] if unvisited_children else False
 
     def best_uct(self, node):
-        return max(node.children, key=lambda child: self.utc(child, node), default=node)
+        return max(
+            node.children,
+            key=lambda child_SAP: self.utc(child_SAP[1], node),
+            default=node,
+        )
 
     def utc(self, node, parent):
         return self.exploitation_component(node) + self.exploration_component(
@@ -81,4 +88,3 @@ class MonteCarloSearchTree:
 
         else:
             return -node.reward
-
