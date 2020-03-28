@@ -13,7 +13,7 @@ class Nim:
         if amount > 0 and amount <= self.pieces:
             self.pieces -= amount
         else:
-            print("amount:", amount, "pieces:", self.pieces)
+            print("amount:", amount, "pieces:", self.pieces, "action: ", action)
             raise ValueError("Illegal move")
 
         return self.is_end_state()
