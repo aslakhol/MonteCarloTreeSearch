@@ -41,14 +41,15 @@ class Agent:
             game = Game()  # init here
             tree = MonteCarloSearchTree()  # init here
             root_node = MonteCarloSearchNode(
-                is_root=True, game_object=game, parent=None
+                is_root=True, game_object=game, parent=None, move_from_parent=False
             )
             print(game.is_end_state())
             while not game.is_end_state():  # game is not completed
                 print("here we go")
 
                 action = tree.suggest_action(root_node)  # root node
-                print(action.game_object)
+                print(action)
+                print("about to move")
                 game.move(action)
 
                 # do the move

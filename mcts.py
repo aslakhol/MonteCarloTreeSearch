@@ -13,12 +13,11 @@ class MonteCarloSearchTree:
             node_to_visit = self.traverse(root)
             simulation_result = self.rollout(node_to_visit)
             self.backpropagate(node_to_visit, simulation_result)
-        return self.best_child(root)
+        return self.best_child(root).move_from_parent
 
     def traverse(self, node):
         while node.is_fully_expanded():
             node = self.best_uct(node)
-            print("node: ", type(node))
 
         return self.pick_unvisited_child(node) or node
 
@@ -42,24 +41,17 @@ class MonteCarloSearchTree:
         return self.child_with_highest_number_of_visits(node)
 
     def child_with_highest_number_of_visits(self, node):
-        return max(
-            node.children, key=lambda child_SAP: child_SAP[1].total_number_of_visits
-        )
+        return max(node.children, key=lambda child: child.total_number_of_visits)
 
     def pick_unvisited_child(self, node):
         unvisited_children = list(
-            filter(
-                lambda child_SAP: child_SAP[1].total_number_of_visits == 0,
-                node.children,
-            )
+            filter(lambda child: child.total_number_of_visits == 0, node.children,)
         )
-        return random.choice(unvisited_children)[1] if unvisited_children else False
+        return random.choice(unvisited_children) if unvisited_children else False
 
     def best_uct(self, node):
         return max(
-            node.children,
-            key=lambda child_SAP: self.utc(child_SAP[1], node),
-            default=node,
+            node.children, key=lambda child: self.utc(child, node), default=node,
         )
 
     def utc(self, node, parent):

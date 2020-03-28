@@ -7,13 +7,15 @@ class MonteCarloSearchNode:
     total_simulation_reward = 0
     total_number_of_visits = 0
     parent = None
+    move_from_parent = None
     reward = 0
     player = None
 
-    def __init__(self, is_root, parent, game_object):
+    def __init__(self, is_root, parent, game_object, move_from_parent):
         self.is_root = is_root
         self.game_object = game_object
         self.parent = parent
+        self.move_from_parent = move_from_parent
         self.reward = game_object.reward()
         self.player = game_object.current_player
 
@@ -24,19 +26,17 @@ class MonteCarloSearchNode:
         if self.children:
             return
         self.children = [
-            (
-                SAP[0],
-                MonteCarloSearchNode(is_root=False, parent=self, game_object=SAP[1]),
+            MonteCarloSearchNode(
+                is_root=False, parent=self, game_object=SAP[1], move_from_parent=SAP[0]
             )
             for SAP in self.game_object.generate_child_states()
         ]
 
     def is_fully_expanded(self):
-        print("hello")
         if not self.children:
             return False
-        for child_SAP in self.children:
-            if child_SAP[1].visited == False:
+        for child in self.children:
+            if child.visited == False:
                 return False
         return True
 
