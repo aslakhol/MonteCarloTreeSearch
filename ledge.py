@@ -1,15 +1,11 @@
 class Ledge:
-    end_state = False
-
     def __init__(self, initial_board):
         self.board = [int(i) for i in initial_board]
-        if not list(filter(lambda x: x == 2, self.board)):
-            self.end_state = True
+        if self.is_end_state():
+            raise Exception("Invalid initial game state")
 
     def move(self, action):
         if action[0] == "PICK_UP":
-            if self.board[0] == 2:
-                self.end_state = True
             self.board[0] = 0
         elif action[0] == "MOVE_COIN":
             position_from = action[1]
@@ -22,7 +18,7 @@ class Ledge:
         return self.is_end_state()
 
     def is_end_state(self):
-        return self.end_state
+        return not list(filter(lambda x: x == 2, self.board))
 
     def get_legal_moves(self):
         moves = []
@@ -41,7 +37,7 @@ class Ledge:
         return "".join(map(str, self.board))
 
     def reward(self):
-        if self.end_state:
+        if self.is_end_state():
             return 1
         elif self.board[0] == 2:
             return -1
@@ -49,7 +45,7 @@ class Ledge:
 
     def get_verbose(self, currentPlayer, action):
         if action[0] == "PICK_UP":
-            coin = "Copper" if not self.end_state else "Gold"
+            coin = "Copper" if not self.is_end_state() else "Gold"
             return f"{currentPlayer} picks up {coin}: {self.board}"
         if action[0] == "MOVE_COIN":
             index = action[2]
