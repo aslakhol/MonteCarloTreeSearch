@@ -1,11 +1,6 @@
-nim = dict(pieces=11, starting_player=1, number_in_batch=100, max_take=3)
+nim = dict(pieces=11, max_take=3)
 
-ledge = dict(
-    number_in_batch=100,
-    initial_board="1001020010",
-    starting_player=1,
-    number_of_simulations=12,
-)
+ledge = dict(initial_board="1001020010")
 
 general = dict(
     verbose=True,
