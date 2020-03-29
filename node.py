@@ -1,8 +1,6 @@
 class MonteCarloSearchNode:
     is_root = False
-    visited = False  #
-    fully_expanded = False
-    reachable_game_states = []
+    visited = False
     children = []
     total_simulation_reward = 0
     total_number_of_visits = 0
@@ -40,11 +38,8 @@ class MonteCarloSearchNode:
                 return False
         return True
 
-    def populate_children(self, possible_moves):
-        pass
-
     def __str__(self):
-        return f"NODE: root: {self.is_root}, player: {self.player}, children: {self.children}"
+        return f"NODE: root: {self.is_root}, player: {self.player}, children: {self.children}, total reward: {self.total_simulation_reward}, visits: {self.total_number_of_visits}"
 
     def __repr__(self):
-        return f"|root: {self.is_root} move from parent: {self.move_from_parent} lm: {self.game_object.game.get_legal_moves()}|"
+        return f"|move from parent: {self.move_from_parent}, total reward: {self.total_simulation_reward}|, visits: {self.total_number_of_visits}"

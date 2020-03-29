@@ -4,9 +4,9 @@ from game import Game
 
 
 class MonteCarloSearchTree:
-    def __init__(self):
-        self.M = 1000
-        self.c = 1.337
+    def __init__(self, M, c):
+        self.M = M
+        self.c = c
 
     def suggest_action(self, root):
         for _ in range(0, self.M):
