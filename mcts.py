@@ -52,9 +52,14 @@ class MonteCarloSearchTree:
         return random.choice(unvisited_children) if unvisited_children else False
 
     def best_uct(self, node):
-        return max(
-            node.children, key=lambda child: self.utc(child, node), default=node,
-        )
+        if node.game_object.current_player == node.game_object.starting_player:
+            return max(
+                node.children, key=lambda child: self.utc(child, node), default=node,
+            )
+        else:
+            return min(
+                node.children, key=lambda child: self.utc(child, node), default=node,
+            )
 
     def utc(self, node, parent):
         return self.exploitation_component(node) + self.exploration_component(
