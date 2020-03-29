@@ -10,7 +10,7 @@ class Agent:
         self.verbose = verbose
         self.stats = {1: 0, 2: 0}
 
-    def play(self, starting_player):
+    def play(self):
         for _ in range(1, self.episodes + 1):
             # print("Starting episode...")
             game = Game()
@@ -29,4 +29,4 @@ class Agent:
 
 agent = Agent(50, False)
 
-agent.play(1)
+agent.play()
