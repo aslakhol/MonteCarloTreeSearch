@@ -15,23 +15,24 @@ class Agent:
             print("Starting episode...")
             game = Game()  # init here
             tree = MonteCarloSearchTree()  # init here
-            root_node = MonteCarloSearchNode(
-                is_root=True, game_object=game, parent=None, move_from_parent=False
+            node = MonteCarloSearchNode(
+                is_root=True, game_object=game, parent=None, move_from_parent=None
             )
-            print(game.is_end_state())
             while not game.is_end_state():  # game is not completed
+                action = tree.suggest_action(node)  # root node
+                current_player = game.current_player
+                moved_game = game.move(action, self.verbose)
+                node = MonteCarloSearchNode(
+                    is_root=True,
+                    game_object=moved_game,
+                    parent=None,
+                    move_from_parent=None,
+                )
+            self.stats[current_player] += 1
+            print(f"Player {current_player} wins the game!")
+        print(self.stats)
 
-                action = tree.suggest_action(root_node)  # root node
-                game.move(action)
 
-                # do the move
-                # update loop condition
-                print(game.current_player)
-            # update who is the winner
-            # update stats with who wins.
-            print("episode finished")
-
-
-agent = Agent(1, True)
+agent = Agent(50, False)
 
 agent.play(1)

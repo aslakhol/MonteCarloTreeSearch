@@ -13,7 +13,7 @@ class Nim:
         if amount > 0 and amount <= self.pieces:
             self.pieces -= amount
         else:
-            print("amount:", amount, "pieces:", self.pieces, "action: ", action)
+            print(f"Remaining pieces: {self.pieces} Attempted move: take {amount}")
             raise ValueError("Illegal move")
 
         return self.is_end_state()
@@ -22,7 +22,9 @@ class Nim:
         return self.pieces == 0
 
     def get_legal_moves(self):
-        return [[i] for i in range(1, min(self.max_take, self.pieces) + 1)]
+        legal_moves = [[i] for i in range(1, min(self.max_take, self.pieces) + 1)]
+        # print("Legal moves:", legal_moves)
+        return legal_moves
 
     def get_state(self):
         return self.pieces

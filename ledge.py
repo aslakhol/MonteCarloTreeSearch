@@ -3,8 +3,8 @@ class Ledge:
 
     def __init__(self, initial_board):
         self.board = [int(i) for i in initial_board]
-        if(not list(filter(lambda x: x==2, self.board))):
-            self.end_state=True
+        if not list(filter(lambda x: x == 2, self.board)):
+            self.end_state = True
 
     def move(self, action):
         if action[0] == "PICK_UP":

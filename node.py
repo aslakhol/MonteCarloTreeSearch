@@ -21,6 +21,8 @@ class MonteCarloSearchNode:
 
         if is_root:
             self.expand()
+            # print("in self expand", self.children)
+            print(f"init. root: {self.is_root} children: {self.children}")
 
     def expand(self):
         if self.children:
@@ -44,7 +46,7 @@ class MonteCarloSearchNode:
         pass
 
     def __str__(self):
-        return f"root: {self.is_root}, player: {self.player}, fully expanded: {self.fully_expanded}, reward: {self.total_simulation_reward}, visits: {self.total_number_of_visits}, game state: {self.game_object.get_state()}"
+        return f"NODE: root: {self.is_root}, player: {self.player}, children: {self.children}"
 
     def __repr__(self):
-        return f"|visits: {self.total_number_of_visits}, reward: {self.total_simulation_reward}, c: {len(self.children)}|"
+        return f"|root: {self.is_root} move from parent: {self.move_from_parent} lm: {self.game_object.game.get_legal_moves()}|"

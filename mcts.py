@@ -13,6 +13,8 @@ class MonteCarloSearchTree:
             node_to_visit = self.traverse(root)
             simulation_result = self.rollout(node_to_visit)
             self.backpropagate(node_to_visit, simulation_result)
+        # print("Possible actions: ", root.game_object.game.get_legal_moves())
+        print(root)
         return self.best_child(root).move_from_parent
 
     def traverse(self, node):
