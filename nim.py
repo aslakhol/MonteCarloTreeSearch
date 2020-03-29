@@ -22,9 +22,7 @@ class Nim:
         return self.pieces == 0
 
     def get_legal_moves(self):
-        legal_moves = [[i] for i in range(1, min(self.max_take, self.pieces) + 1)]
-        # print("Legal moves:", legal_moves)
-        return legal_moves
+        return [[i] for i in range(1, min(self.max_take, self.pieces) + 1)]
 
     def get_state(self):
         return self.pieces

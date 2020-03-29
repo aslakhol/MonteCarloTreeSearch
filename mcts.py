@@ -5,7 +5,7 @@ from game import Game
 
 class MonteCarloSearchTree:
     def __init__(self):
-        self.M = 100
+        self.M = 9001
         self.c = 2
 
     def suggest_action(self, root):
@@ -13,9 +13,8 @@ class MonteCarloSearchTree:
             node_to_visit = self.traverse(root)
             simulation_result = self.rollout(node_to_visit)
             self.backpropagate(node_to_visit, simulation_result)
-        # print("Possible actions: ", root.game_object.game.get_legal_moves())
-        print(root)
-        return self.best_child(root).move_from_parent
+        suggested_child = self.best_child(root)
+        return (suggested_child.move_from_parent, suggested_child)
 
     def traverse(self, node):
         while node.is_fully_expanded():
@@ -62,13 +61,6 @@ class MonteCarloSearchTree:
         )
 
     def exploitation_component(self, node):
-        # print(
-        #     "reward:",
-        #     node.total_simulation_reward,
-        #     "visits:",
-        #     node.total_number_of_visits,
-        #     node.total_simulation_reward / node.total_number_of_visits,
-        # )
         return node.total_simulation_reward / node.total_number_of_visits
 
     def exploration_component(self, node, parent):

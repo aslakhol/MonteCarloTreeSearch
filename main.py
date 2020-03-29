@@ -11,28 +11,22 @@ class Agent:
         self.stats = {1: 0, 2: 0}
 
     def play(self, starting_player):
-        for episode in range(1, self.episodes + 1):
-            print("Starting episode...")
-            game = Game()  # init here
-            tree = MonteCarloSearchTree()  # init here
+        for _ in range(1, self.episodes + 1):
+            # print("Starting episode...")
+            game = Game()
+            mcst = MonteCarloSearchTree()
             node = MonteCarloSearchNode(
                 is_root=True, game_object=game, parent=None, move_from_parent=None
             )
             while not game.is_end_state():  # game is not completed
-                action = tree.suggest_action(node)  # root node
+                action, node = mcst.suggest_action(node)  # root node
                 current_player = game.current_player
-                moved_game = game.move(action, self.verbose)
-                node = MonteCarloSearchNode(
-                    is_root=True,
-                    game_object=moved_game,
-                    parent=None,
-                    move_from_parent=None,
-                )
+                game.move(action, self.verbose)
             self.stats[current_player] += 1
-            print(f"Player {current_player} wins the game!")
+            # print(f"Player {current_player} wins the game!")
         print(self.stats)
 
 
-agent = Agent(50, False)
+agent = Agent(500, False)
 
 agent.play(1)

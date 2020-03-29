@@ -21,8 +21,6 @@ class MonteCarloSearchNode:
 
         if is_root:
             self.expand()
-            # print("in self expand", self.children)
-            print(f"init. root: {self.is_root} children: {self.children}")
 
     def expand(self):
         if self.children:
