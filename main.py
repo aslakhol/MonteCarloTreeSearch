@@ -27,6 +27,6 @@ class Agent:
         print(self.stats)
 
 
-agent = Agent(500, False)
+agent = Agent(50, False)
 
 agent.play(1)
