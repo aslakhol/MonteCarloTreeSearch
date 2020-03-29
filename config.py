@@ -4,7 +4,6 @@ ledge = dict(initial_board="11211")
 
 general = dict(
     verbose=True,
-    win_statistics_batch=True,
     game="ledge",
     starting_player="one",  # one, two or mix
     episodes=10,
