@@ -6,9 +6,12 @@ import random
 
 
 class Agent:
-    def __init__(self, episodes, verbose):
-        self.episodes = episodes
-        self.verbose = verbose
+    def __init__(self):
+        self.episodes = config["episodes"]
+        self.M = config["M"]
+        self.c = config["c"]
+        self.verbose = config["verbose"]
+
         self.stats = {1: 0, 2: 0}
 
     def play(self):
@@ -26,6 +29,5 @@ class Agent:
         print(self.stats)
 
 
-agent = Agent(50, False)
-
+agent = Agent()
 agent.play()
