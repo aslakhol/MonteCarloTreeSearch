@@ -33,12 +33,12 @@ class Game:
         return Ledge(initial_board=board)
 
     def initialize_starting_player(self):
-        config = general_config["starting_player"]
-        if config == "one":
+        player = general_config["starting_player"]
+        if player == "one":
             return 1
-        elif config == "two":
+        elif player == "two":
             return 2
-        elif config == "mix":
+        elif player == "mix":
             return 1 if random.random() > 0.5 else 2
 
     def switch_current_player(self):
