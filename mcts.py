@@ -5,8 +5,8 @@ from game import Game
 
 class MonteCarloSearchTree:
     def __init__(self):
-        self.M = 500
-        self.c = 2
+        self.M = 1000
+        self.c = 1.337
 
     def suggest_action(self, root):
         for _ in range(0, self.M):
@@ -25,8 +25,9 @@ class MonteCarloSearchTree:
     def rollout(self, node):
         node.expand()
         node.visited = True
-        rollout_game = Game(node.game_object.get_state())
-        return rollout_game.play_randomly()  # this is our rollout policy
+        rollout_game = Game(*node.game_object.get_state())
+        result = rollout_game.play_randomly()  # this is our rollout policy
+        return result
 
     def backpropagate(self, node, result):
         if node:
