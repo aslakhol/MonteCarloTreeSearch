@@ -26,7 +26,12 @@ class Agent:
                 current_player = game.current_player
                 game.move(action, self.verbose)
             self.stats[current_player] += 1
-        print(self.stats)
+        print(
+            f"Player 1 won {self.stats[1]}/{self.episodes} ({round(100 * self.stats[1]/self.episodes, 1)}%)"
+        )
+        print(
+            f"Player 2 won {self.stats[2]}/{self.episodes} ({round(100 * self.stats[2]/self.episodes, 1)}%)"
+        )
 
 
 agent = Agent()
