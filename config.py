@@ -1,6 +1,6 @@
 nim = dict(pieces=11, max_take=3)
 
-ledge = dict(initial_board="1001020010")
+ledge = dict(initial_board="11211")
 
 general = dict(
     verbose=True,
@@ -8,6 +8,6 @@ general = dict(
     game="nim",
     starting_player="one",  # one, two or mix
     episodes=50,
-    M=1000,
+    M=10000,
     c=1,
 )

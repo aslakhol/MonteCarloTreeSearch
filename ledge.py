@@ -16,7 +16,7 @@ class Ledge:
         return self.is_end_state()
 
     def is_end_state(self):
-        return not list(filter(lambda x: x == 2, self.board))
+        return not self.board.count(2) 
 
     def get_legal_moves(self):
         moves = []
