@@ -37,7 +37,8 @@ class MonteCarloSearchTree:
 
     def update_stats(self, node, result):
         node.total_number_of_visits += 1
-        node.total_simulation_reward += result
+        if(node.game_object.is_end_state()):
+            node.total_simulation_reward += result
 
     def best_child(self, node):
         return self.child_with_highest_number_of_visits(node)

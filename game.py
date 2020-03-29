@@ -72,7 +72,7 @@ class Game:
         return self.game.get_state(), self.current_player
 
     def reward(self):
-        if self.current_player == self.starting_player:
+        if self.current_player != self.starting_player:
             return self.game.reward()
         else:
             return self.game.reward() * -1
