@@ -5,7 +5,7 @@ from game import Game
 
 class MonteCarloSearchTree:
     def __init__(self):
-        self.M = 500
+        self.M = 9001
         self.c = 2
 
     def suggest_action(self, root):
@@ -13,12 +13,11 @@ class MonteCarloSearchTree:
             node_to_visit = self.traverse(root)
             simulation_result = self.rollout(node_to_visit)
             self.backpropagate(node_to_visit, simulation_result)
-        return self.best_child(root)
+        suggested_child = self.best_child(root)
+        return (suggested_child.move_from_parent, suggested_child)
 
     def traverse(self, node):
-
         while node.is_fully_expanded():
-
             node = self.best_uct(node)
 
         return self.pick_unvisited_child(node) or node
@@ -43,17 +42,18 @@ class MonteCarloSearchTree:
         return self.child_with_highest_number_of_visits(node)
 
     def child_with_highest_number_of_visits(self, node):
-
-        return max(node.children, key=lambda x: x.total_number_of_visits)
+        return max(node.children, key=lambda child: child.total_number_of_visits)
 
     def pick_unvisited_child(self, node):
         unvisited_children = list(
-            filter(lambda x: x.total_number_of_visits == 0, node.children)
+            filter(lambda child: child.total_number_of_visits == 0, node.children,)
         )
         return random.choice(unvisited_children) if unvisited_children else False
 
     def best_uct(self, node):
-        return max(node.children, key=lambda child: self.utc(child, node), default=node)
+        return max(
+            node.children, key=lambda child: self.utc(child, node), default=node,
+        )
 
     def utc(self, node, parent):
         return self.exploitation_component(node) + self.exploration_component(
@@ -61,13 +61,6 @@ class MonteCarloSearchTree:
         )
 
     def exploitation_component(self, node):
-        # print(
-        #     "reward:",
-        #     node.total_simulation_reward,
-        #     "visits:",
-        #     node.total_number_of_visits,
-        #     node.total_simulation_reward / node.total_number_of_visits,
-        # )
         return node.total_simulation_reward / node.total_number_of_visits
 
     def exploration_component(self, node, parent):
@@ -81,4 +74,3 @@ class MonteCarloSearchTree:
 
         else:
             return -node.reward
-

@@ -1,4 +1,4 @@
-nim = dict(pieces=10, starting_player=1, number_in_batch=100, max_take=3)
+nim = dict(pieces=11, starting_player=1, number_in_batch=100, max_take=3)
 
 ledge = dict(
     number_in_batch=100,
@@ -10,6 +10,6 @@ ledge = dict(
 general = dict(
     verbose_mode=False,
     win_statistics_batch=True,
-    game="ledge",
+    game="nim",
     starting_player="one",  # one, two or mix
 )

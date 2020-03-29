@@ -3,28 +3,30 @@ from mcts import MonteCarloSearchTree
 from node import MonteCarloSearchNode
 import random
 
-# game = Game()
-# tree = MonteCarloSearchTree()
-# root_node = MonteCarloSearchNode(is_root=True, game_object=game, parent=None)
-# print("Begin")
-# suggested_action = tree.suggest_action(root_node)
-# print("Suggested action:", suggested_action)
 
-# print()
+class Agent:
+    def __init__(self, episodes, verbose):
+        self.episodes = episodes
+        self.verbose = verbose
+        self.stats = {1: 0, 2: 0}
 
-# print(suggested_action)
+    def play(self, starting_player):
+        for _ in range(1, self.episodes + 1):
+            # print("Starting episode...")
+            game = Game()
+            mcst = MonteCarloSearchTree()
+            node = MonteCarloSearchNode(
+                is_root=True, game_object=game, parent=None, move_from_parent=None
+            )
+            while not game.is_end_state():  # game is not completed
+                action, node = mcst.suggest_action(node)  # root node
+                current_player = game.current_player
+                game.move(action, self.verbose)
+            self.stats[current_player] += 1
+            # print(f"Player {current_player} wins the game!")
+        print(self.stats)
 
-moves = {}
 
-for _ in range(0, 500):
-    print(_)
-    game = Game()
-    tree = MonteCarloSearchTree()
-    root_node = MonteCarloSearchNode(is_root=True, game_object=game, parent=None)
-    suggested_action = tree.suggest_action(root_node)
-    move = suggested_action.game_object.get_state()
+agent = Agent(500, False)
 
-    moves[move] = moves.get(move, 0) + 1
-
-print(moves)
-
+agent.play(1)

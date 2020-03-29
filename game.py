@@ -37,9 +37,9 @@ class Game:
         else:
             self.current_player = 1
 
-    def move(self, action):
+    def move(self, action, verbose):
         self.game.move(action)
-        if self.verbose:
+        if verbose:
             print(self.game.get_verbose(self.current_player, action))
         self.switch_current_player()
         return self
@@ -49,7 +49,8 @@ class Game:
 
     def generate_child_states(self):
         return [
-            Game(self.get_state()).move(action) for action in self.get_legal_moves()
+            (action, Game(self.get_state()).move(action, False))
+            for action in self.get_legal_moves()
         ]
 
     def get_legal_moves(self):
@@ -67,7 +68,7 @@ class Game:
     def play_randomly(self):
         while not self.is_end_state():
             legal_moves = self.get_legal_moves()
-            self.move(random.choice(legal_moves))
+            self.move(random.choice(legal_moves), False)
         return self.reward()
 
     def __str__(self):
