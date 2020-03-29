@@ -2,7 +2,7 @@ class Nim:
     board = []
 
     def __init__(self, pieces, max_take):
-        if pieces > 0 and max_take > 0:
+        if max_take > 0:
             self.pieces = pieces
             self.max_take = max_take
         else:
@@ -29,7 +29,7 @@ class Nim:
 
     def reward(self):
         if self.is_end_state():
-            return 1
+            return -1
         return 0
 
     def get_verbose(self, currentPlayer, action):

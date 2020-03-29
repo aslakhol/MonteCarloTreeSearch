@@ -16,7 +16,7 @@ class Ledge:
         return self.is_end_state()
 
     def is_end_state(self):
-        return not list(filter(lambda x: x == 2, self.board))
+        return not self.board.count(2) 
 
     def get_legal_moves(self):
         moves = []
@@ -36,7 +36,7 @@ class Ledge:
 
     def reward(self):
         if self.is_end_state():
-            return 1
+            return -1
         return 0
 
     def get_verbose(self, currentPlayer, action):
