@@ -60,7 +60,10 @@ class Game:
         return self.game.get_state()
 
     def reward(self):
-        return self.game.reward()
+        if self.current_player == 1:
+            return self.game.reward()
+        else:
+            return self.game.reward() * -1
 
     def play_randomly(self):
         while not self.is_end_state():
