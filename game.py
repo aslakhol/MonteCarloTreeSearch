@@ -8,22 +8,32 @@ from nim import Nim
 
 class Game:
     def __init__(self, initial_state=""):
-        self.verbose = general_config["verbose_mode"]
-        self.starting_player = self.get_starting_player(
-            general_config["starting_player"]
-        )
+        self.starting_player = self.initialize_starting_player()
         self.current_player = self.starting_player
-        if general_config["game"] == "nim":
-            pieces = initial_state if initial_state else nim_config["pieces"]
-            self.game = Nim(pieces=pieces, max_take=nim_config["max_take"])
-        elif general_config["game"] == "ledge":
-            board = initial_state if initial_state else ledge_config["initial_board"]
-            self.game = Ledge(initial_board=board)
-        else:
-            raise Exception("Wrong game configuration")
+        self.game = self.select_game(initial_state)
 
-    # Initialize starting player
-    def get_starting_player(self, config):
+    def select_game(self, initial_state):
+        name = general_config["game"]
+        try:
+            if name == "nim":
+                return self.setup_nim(initial_state)
+            elif name == "ledge":
+                return self.setup_ledge(initial_state)
+            else:
+                raise Exception("Invalid name in game configuration")
+        except:
+            raise Exception("Invalid game configuration")
+
+    def setup_nim(self, initial_state):
+        pieces = initial_state if initial_state else nim_config["pieces"]
+        return Nim(pieces=pieces, max_take=nim_config["max_take"])
+
+    def setup_ledge(self, initial_state):
+        board = initial_state if initial_state else ledge_config["initial_board"]
+        return Ledge(initial_board=board)
+
+    def initialize_starting_player(self):
+        config = general_config["starting_player"]
         if config == "one":
             return 1
         elif config == "two":
