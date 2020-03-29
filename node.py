@@ -6,7 +6,6 @@ class MonteCarloSearchNode:
     total_number_of_visits = 0
     parent = None
     move_from_parent = None
-    reward = 0
     player = None
 
     def __init__(self, is_root, parent, game_object, move_from_parent):
@@ -14,7 +13,6 @@ class MonteCarloSearchNode:
         self.game_object = game_object
         self.parent = parent
         self.move_from_parent = move_from_parent
-        self.reward = game_object.reward()
         self.player = game_object.current_player
 
         if is_root:

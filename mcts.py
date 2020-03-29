@@ -68,10 +68,3 @@ class MonteCarloSearchTree:
         return self.c * math.sqrt(
             math.log(parent.total_number_of_visits) / node.total_number_of_visits
         )
-
-    def reward(self, node):
-        if node.player == 1:
-            return node.reward
-
-        else:
-            return -node.reward

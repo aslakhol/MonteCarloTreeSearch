@@ -28,7 +28,7 @@ class Nim:
         return self.pieces
 
     def reward(self):
-        if self.pieces == 0:
+        if self.is_end_state():
             return 1
         return 0
 
