@@ -24,14 +24,6 @@ class Ledge:
     def is_end_state(self):
         return self.end_state
 
-    def generate_child_states(self):
-        child_states = []
-        for move in self.get_legal_moves():
-            game = Ledge(initial_board=self.getState())
-            game.move(move)
-            child_states.append(game.get_state())
-        return child_states
-
     def get_legal_moves(self):
         moves = []
         coin_indices = [index for index, value in enumerate(self.board) if value != 0]
@@ -57,7 +49,6 @@ class Ledge:
 
     def get_verbose(self, currentPlayer, action):
         if action[0] == "PICK_UP":
-            item = self.board[0]
             coin = "Copper" if not self.end_state else "Gold"
             return f"{currentPlayer} picks up {coin}: {self.board}"
         if action[0] == "MOVE_COIN":
