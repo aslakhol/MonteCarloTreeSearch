@@ -2,7 +2,7 @@ class Nim:
     board = []
 
     def __init__(self, pieces, max_take):
-        if  max_take > 0:
+        if max_take > 0:
             self.pieces = pieces
             self.max_take = max_take
         else:

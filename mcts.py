@@ -58,7 +58,7 @@ class MonteCarloSearchTree:
             )
         else:
             return min(
-                node.children, key=lambda child: self.utc2(child, node), default=node,
+                node.children, key=lambda child: self.utc_negative(child, node), default=node,
             )
 
     def utc(self, node, parent):
@@ -66,7 +66,7 @@ class MonteCarloSearchTree:
             node, parent
         )
         
-    def utc2(self, node, parent):
+    def utc_negative(self, node, parent):
         return self.exploitation_component(node) - self.exploration_component(
             node, parent
         )

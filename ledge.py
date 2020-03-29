@@ -19,8 +19,6 @@ class Ledge:
         return not self.board.count(2) 
 
     def get_legal_moves(self):
-        if(self.is_end_state()):
-            return []
         moves = []
         coin_indices = [index for index, value in enumerate(self.board) if value != 0]
         for index in coin_indices:

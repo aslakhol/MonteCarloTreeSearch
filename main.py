@@ -21,15 +21,9 @@ class Agent:
             node = MonteCarloSearchNode(
                 is_root=True, game_object=game, parent=None, move_from_parent=None
             )
-            #print("new game")
             while not game.is_end_state():
-                #print()
-                #print()
-                oldNode = node
                 action, node = mcst.suggest_action(node)
                 current_player = game.current_player
-                print(oldNode.children)
-                print(action)
                 game.move(action, self.verbose)
             self.stats[current_player] += 1
         print(

@@ -22,11 +22,13 @@ class Game:
             raise Exception("Invalid name in game configuration")
 
     def setup_nim(self, initial_state):
-        pieces = initial_state if initial_state!=None else nim_config["pieces"]
+        pieces = initial_state if initial_state != None else nim_config["pieces"]
         return Nim(pieces=pieces, max_take=nim_config["max_take"])
 
     def setup_ledge(self, initial_state):
-        board = initial_state if initial_state != None else ledge_config["initial_board"]
+        board = (
+            initial_state if initial_state != None else ledge_config["initial_board"]
+        )
         return Ledge(initial_board=board)
 
     def initialize_starting_player(self):
@@ -57,8 +59,6 @@ class Game:
         return self.game.is_end_state()
 
     def generate_child_states(self):
-        if(self.is_end_state()):
-            return []
         return [
             (action, Game(*self.get_state()).move(action, False))
             for action in self.get_legal_moves()
