@@ -7,29 +7,26 @@ from nim import Nim
 
 
 class Game:
-    def __init__(self, initial_state="", current_player=0):
+    def __init__(self, initial_state=None, current_player=0):
         self.starting_player = self.initialize_starting_player()
         self.current_player = current_player if current_player else self.starting_player
         self.game = self.select_game(initial_state)
 
     def select_game(self, initial_state):
         name = general_config["game"]
-        try:
-            if name == "nim":
-                return self.setup_nim(initial_state)
-            elif name == "ledge":
-                return self.setup_ledge(initial_state)
-            else:
-                raise Exception("Invalid name in game configuration")
-        except:
-            raise Exception("Invalid game configuration")
+        if name == "nim":
+            return self.setup_nim(initial_state)
+        elif name == "ledge":
+            return self.setup_ledge(initial_state)
+        else:
+            raise Exception("Invalid name in game configuration")
 
     def setup_nim(self, initial_state):
-        pieces = initial_state if initial_state else nim_config["pieces"]
+        pieces = initial_state if initial_state!=None else nim_config["pieces"]
         return Nim(pieces=pieces, max_take=nim_config["max_take"])
 
     def setup_ledge(self, initial_state):
-        board = initial_state if initial_state else ledge_config["initial_board"]
+        board = initial_state if initial_state != None else ledge_config["initial_board"]
         return Ledge(initial_board=board)
 
     def initialize_starting_player(self):
@@ -74,7 +71,7 @@ class Game:
         return self.game.get_state(), self.current_player
 
     def reward(self):
-        if self.current_player != self.starting_player:
+        if self.current_player == self.starting_player:
             return self.game.reward()
         else:
             return self.game.reward() * -1

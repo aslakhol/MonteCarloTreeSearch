@@ -38,7 +38,7 @@ class Ledge:
 
     def reward(self):
         if self.is_end_state():
-            return 1
+            return -1
         return 0
 
     def get_verbose(self, currentPlayer, action):
