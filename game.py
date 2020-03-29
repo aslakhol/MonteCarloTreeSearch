@@ -7,9 +7,9 @@ from nim import Nim
 
 
 class Game:
-    def __init__(self, initial_state=""):
+    def __init__(self, initial_state="", current_player=0):
         self.starting_player = self.initialize_starting_player()
-        self.current_player = self.starting_player
+        self.current_player = current_player if current_player else self.starting_player
         self.game = self.select_game(initial_state)
 
     def select_game(self, initial_state):
@@ -59,7 +59,7 @@ class Game:
 
     def generate_child_states(self):
         return [
-            (action, Game(self.get_state()).move(action, False))
+            (action, Game(*self.get_state()).move(action, False))
             for action in self.get_legal_moves()
         ]
 
@@ -67,7 +67,7 @@ class Game:
         return self.game.get_legal_moves()
 
     def get_state(self):
-        return self.game.get_state()
+        return self.game.get_state(), self.current_player
 
     def reward(self):
         if self.current_player == 1:

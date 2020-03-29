@@ -25,8 +25,9 @@ class MonteCarloSearchTree:
     def rollout(self, node):
         node.expand()
         node.visited = True
-        rollout_game = Game(node.game_object.get_state())
-        return rollout_game.play_randomly()  # this is our rollout policy
+        rollout_game = Game(*node.game_object.get_state())
+        result = rollout_game.play_randomly()  # this is our rollout policy
+        return result
 
     def backpropagate(self, node, result):
         if node:
